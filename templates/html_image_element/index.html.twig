@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HTMLImageElement index{% endblock %}
+
+{% block body %}
+    <h1>HTMLImageElement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>AccessKey</th>
+                <th>AutoCapitalize</th>
+                <th>Class</th>
+                <th>ContentEditable</th>
+                <th>Dir</th>
+                <th>Draggable</th>
+                <th>Dropzone</th>
+                <th>Hidden</th>
+                <th>Data</th>
+                <th>Uid</th>
+                <th>ItemId</th>
+                <th>ItemProp</th>
+                <th>ItemRef</th>
+                <th>ItemScope</th>
+                <th>ItemType</th>
+                <th>Lang</th>
+                <th>Style</th>
+                <th>TabIndex</th>
+                <th>Title</th>
+                <th>Alt</th>
+                <th>CrossOrigin</th>
+                <th>Decoding</th>
+                <th>Height</th>
+                <th>Width</th>
+                <th>Loading</th>
+                <th>Source</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for html_image_element in html_image_elements %}
+            <tr>
+                <td>{{ html_image_element.id }}</td>
+                <td>{{ html_image_element.accessKey }}</td>
+                <td>{{ html_image_element.autoCapitalize }}</td>
+                <td>{{ html_image_element.class }}</td>
+                <td>{{ html_image_element.contentEditable }}</td>
+                <td>{{ html_image_element.dir }}</td>
+                <td>{{ html_image_element.draggable }}</td>
+                <td>{{ html_image_element.dropzone }}</td>
+                <td>{{ html_image_element.hidden }}</td>
+                <td>{{ html_image_element.data ? html_image_element.data|join(', ') : '' }}</td>
+                <td>{{ html_image_element.uid }}</td>
+                <td>{{ html_image_element.itemId }}</td>
+                <td>{{ html_image_element.itemProp }}</td>
+                <td>{{ html_image_element.itemRef }}</td>
+                <td>{{ html_image_element.itemScope }}</td>
+                <td>{{ html_image_element.itemType }}</td>
+                <td>{{ html_image_element.lang }}</td>
+                <td>{{ html_image_element.style }}</td>
+                <td>{{ html_image_element.tabIndex }}</td>
+                <td>{{ html_image_element.title }}</td>
+                <td>{{ html_image_element.alt }}</td>
+                <td>{{ html_image_element.crossOrigin }}</td>
+                <td>{{ html_image_element.decoding }}</td>
+                <td>{{ html_image_element.height }}</td>
+                <td>{{ html_image_element.width }}</td>
+                <td>{{ html_image_element.loading }}</td>
+                <td>{{ html_image_element.src }}</td>
+                <td>
+                    <a href="{{ path('html_image_element_show', {'id': html_image_element.id}) }}">show</a>
+                    <a href="{{ path('html_image_element_edit', {'id': html_image_element.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="27">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('html_image_element.create') }}">Create new</a>
+{% endblock %}

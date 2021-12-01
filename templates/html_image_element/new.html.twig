@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New HTMLImageElement{% endblock %}
+
+{% block body %}
+    <h1>Create new HTMLImageElement</h1>
+
+    {{ include('html_image_element/_form.html.twig') }}
+
+    <a href="{{ path('html_image_element') }}">back to list</a>
+{% endblock %}
