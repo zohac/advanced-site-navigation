@@ -15,7 +15,7 @@ class URI
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(name="scheme", type="string", length=255, nullable=true)
@@ -66,17 +66,27 @@ class URI
     {
         // weak type check to also accept null until we can add scalar type hints
         if (null !== $url) {
-            $parts = parse_url($url);
-            if (false === $parts) {
-                throw new \InvalidArgumentException("Unable to parse URI: $url");
-            }
-
-            foreach ($parts as $key => $value) {
-                $this->$key = $value;
-            }
-
-            $this->raw = $url;
+            $this->init($url);
         }
+    }
+
+    /**
+     * @return $this
+     */
+    public function init(string $url): self
+    {
+        $parts = parse_url($url);
+        if (false === $parts) {
+            throw new \InvalidArgumentException("Unable to parse URI: $url");
+        }
+
+        foreach ($parts as $key => $value) {
+            $this->$key = $value;
+        }
+
+        $this->raw = $url;
+
+        return $this;
     }
 
     public function __toString(): string
@@ -86,13 +96,11 @@ class URI
 
     /**
      * URL structure :
-     *      scheme://username:password@hostname:port/path?arg=value#anchor
-     *
-     * @return string
+     *      scheme://username:password@hostname:port/path?arg=value#anchor.
      */
     public function getAbsolutePath(): string
     {
-        $url = null === $this->scheme ? '' : $this->scheme . '://';
+        $url = null === $this->scheme ? '' : $this->scheme.'://';
         $url .= $this->user ?? '';
         $url .= null === $this->pass ? '' : ':'.$this->pass;
         $url .= $this->host ?? '';
@@ -110,7 +118,7 @@ class URI
         if ($this->query) {
             foreach ($this->query as $value) {
                 $url .= 0 === $counter ? '?'.$value : '&'.$value;
-                $counter++;
+                ++$counter;
             }
         }
 
@@ -119,24 +127,17 @@ class URI
         return $url;
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getScheme(): ?string
     {
         return $this->scheme;
     }
 
     /**
-     * @param string|null $scheme
      * @return $this
      */
     public function setScheme(?string $scheme): self
@@ -146,16 +147,12 @@ class URI
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getHost(): ?string
     {
         return $this->host;
     }
 
     /**
-     * @param string|null $host
      * @return $this
      */
     public function setHost(?string $host): self
@@ -165,16 +162,12 @@ class URI
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getUser(): ?string
     {
         return $this->user;
     }
 
     /**
-     * @param string|null $user
      * @return $this
      */
     public function setUser(?string $user): self
@@ -184,16 +177,12 @@ class URI
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPass(): ?string
     {
         return $this->pass;
     }
 
     /**
-     * @param string|null $pass
      * @return $this
      */
     public function setPass(?string $pass): self
@@ -203,16 +192,12 @@ class URI
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getPort(): ?int
     {
         return $this->port;
     }
 
     /**
-     * @param int|null $port
      * @return $this
      */
     public function setPort(?int $port): self
@@ -222,16 +207,12 @@ class URI
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPath(): ?string
     {
         return $this->path;
     }
 
     /**
-     * @param string|null $path
      * @return $this
      */
     public function setPath(?string $path): self
@@ -242,15 +223,15 @@ class URI
     }
 
     /**
-     * @return string[]
+     * @return string[]|null
      */
-    public function getQuery(): array
+    public function getQuery(): ?array
     {
         return $this->query;
     }
 
     /**
-     * @param array $query
+     * @param string[] $query
      * @return $this
      */
     public function setQuery(array $query = []): self
@@ -260,16 +241,12 @@ class URI
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFragment(): ?string
     {
         return $this->fragment;
     }
 
     /**
-     * @param string|null $fragment
      * @return $this
      */
     public function setFragment(?string $fragment): self
@@ -279,9 +256,6 @@ class URI
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getRaw(): ?string
     {
         return $this->raw;

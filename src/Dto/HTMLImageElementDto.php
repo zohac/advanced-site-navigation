@@ -2,9 +2,9 @@
 
 namespace App\Dto;
 
-use App\DBAL\CrossOriginEnum;
-use App\DBAL\DecodingEnum;
-use App\DBAL\LoadingEnum;
+use App\Enum\CrossOriginEnum;
+use App\Enum\DecodingEnum;
+use App\Enum\LoadingEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class HTMLImageElementDto extends HTMLElementDto
@@ -40,6 +40,6 @@ class HTMLImageElementDto extends HTMLElementDto
     #[Assert\Choice(choices: HTMLImageElementDto::LOADING, message: 'Choose a valid value.')]
     public ?string $loading;
 
-    #[Assert\NotNull()]
+    #[Assert\NotNull]
     public string $src;
 }

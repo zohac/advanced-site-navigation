@@ -2,28 +2,36 @@
 
 namespace App\Entity;
 
-use App\DBAL\OListEnum;
+use App\Enum\ContentType;
+use App\Enum\OListEnum;
 use App\Interfaces\FlowContentInterface;
 use App\Repository\HTMLOListElementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @UniqueEntity("uuid")
  * @ORM\Entity(repositoryClass=HTMLOListElementRepository::class)
  * @ORM\Table(name="html_olist_element",
  *    uniqueConstraints={
- *        @ORM\UniqueConstraint(name="id_html_olist_element",
- *            columns={"id_html_olist_element"})
+ *        @ORM\UniqueConstraint(name="uuid",
+ *            columns={"id_html_olist_element", "id_html_element"})
  *    })
  */
 class HTMLOListElement extends HTMLElement implements FlowContentInterface
 {
+    private const CONTENT_TYPE = [
+        ContentType::FLOW,
+    ];
+
     /**
-     * @ORM\GeneratedValue("UUID")
+     * @ORM\Id
      * @ORM\Column(name="id_html_olist_element", type="string")
      */
-    private $uuid;
+    private string $uuid;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -41,19 +49,20 @@ class HTMLOListElement extends HTMLElement implements FlowContentInterface
     private string $type = OListEnum::TYPE_NUMERAL;
 
     /**
-     * @ORM\ManyToOne(targetEntity=HTMLNavElement::class, inversedBy="content")
-     * @ORM\JoinColumn(name="id_html_nav_element", referencedColumnName="id_html_nav_element")
+     * @ORM\OneToMany(targetEntity=HTMLLiElement::class, mappedBy="parent")
      */
-    private $parent;
+    private $HTMLLiElement;
 
-    /**
-     * @return string
-     */
+    public function __construct()
+    {
+        $this->HTMLLiElement = new ArrayCollection();
+        $this->uuid = Uuid::v4();
+    }
+
     public function getUuid(): string
     {
         return $this->uuid;
     }
-
 
     public function getReversed(): ?bool
     {
@@ -87,21 +96,47 @@ class HTMLOListElement extends HTMLElement implements FlowContentInterface
     public function setType(string $type): self
     {
         if (!in_array($type, OListEnum::getValues(), true)) {
-            throw new \InvalidArgumentException("Invalid status");
+            throw new \InvalidArgumentException('Invalid status');
         }
         $this->type = $type;
 
         return $this;
     }
 
-    public function getParent(): ?HTMLNavElement
+    /**
+     * @return string[]
+     */
+    public function getContentType(): array
     {
-        return $this->parent;
+        return self::CONTENT_TYPE;
     }
 
-    public function setParent(?HTMLNavElement $parent): self
+    /**
+     * @return Collection|HTMLLiElement[]
+     */
+    public function getHTMLLiElement(): Collection
     {
-        $this->parent = $parent;
+        return $this->HTMLLiElement;
+    }
+
+    public function addHTMLLiElement(HTMLLiElement $HTMLLiElement): self
+    {
+        if (!$this->HTMLLiElement->contains($HTMLLiElement)) {
+            $this->HTMLLiElement[] = $HTMLLiElement;
+            $HTMLLiElement->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHTMLLiElement(HTMLLiElement $HTMLLiElement): self
+    {
+        if ($this->HTMLLiElement->removeElement($HTMLLiElement)) {
+            // set the owning side to null (unless already changed)
+            if ($HTMLLiElement->getParent() === $this) {
+                $HTMLLiElement->setParent(null);
+            }
+        }
 
         return $this;
     }

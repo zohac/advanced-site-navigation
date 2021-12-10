@@ -52,7 +52,7 @@ class HTMLImageElementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'html_image_element_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'html_image_element.show', methods: ['GET'])]
     public function show(HTMLImageElement $HTMLImageElement): Response
     {
         return $this->render('html_image_element/show.html.twig', [
@@ -60,7 +60,7 @@ class HTMLImageElementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'html_image_element_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'html_image_element.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, HTMLImageElement $HTMLImageElement, EntityManagerInterface $entityManager): Response
     {
         $HTMLImageElementDto = $this->service->convertEntityToDto($HTMLImageElement);
@@ -80,10 +80,10 @@ class HTMLImageElementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'html_image_element_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'html_image_element.delete', methods: ['POST'])]
     public function delete(Request $request, HTMLImageElement $HTMLImageElement, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $HTMLImageElement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$HTMLImageElement->getId(), $request->request->get('_token'))) {
             $entityManager->remove($HTMLImageElement);
             $entityManager->flush();
         }

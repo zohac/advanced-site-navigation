@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HTMLNavElement index{% endblock %}
+
+{% block body %}
+    <h1>HTMLNavElement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>AccessKey</th>
+                <th>AutoCapitalize</th>
+                <th>Class</th>
+                <th>ContentEditable</th>
+                <th>Dir</th>
+                <th>Draggable</th>
+                <th>Dropzone</th>
+                <th>Hidden</th>
+                <th>Data</th>
+                <th>Uid</th>
+                <th>ItemId</th>
+                <th>ItemProp</th>
+                <th>ItemRef</th>
+                <th>ItemScope</th>
+                <th>ItemType</th>
+                <th>Lang</th>
+                <th>Style</th>
+                <th>TabIndex</th>
+                <th>Title</th>
+                <th>Uuid</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for html_nav_element in html_nav_elements %}
+            <tr>
+                <td>{{ html_nav_element.id }}</td>
+                <td>{{ html_nav_element.accessKey }}</td>
+                <td>{{ html_nav_element.autoCapitalize }}</td>
+                <td>{{ html_nav_element.class }}</td>
+                <td>{{ html_nav_element.contentEditable ? 'Yes' : 'No' }}</td>
+                <td>{{ html_nav_element.dir }}</td>
+                <td>{{ html_nav_element.draggable ? 'Yes' : 'No' }}</td>
+                <td>{{ html_nav_element.dropzone }}</td>
+                <td>{{ html_nav_element.hidden ? 'Yes' : 'No' }}</td>
+                <td>{{ html_nav_element.data ? html_nav_element.data|join(', ') : '' }}</td>
+                <td>{{ html_nav_element.uid }}</td>
+                <td>{{ html_nav_element.itemId }}</td>
+                <td>{{ html_nav_element.itemProp }}</td>
+                <td>{{ html_nav_element.itemRef }}</td>
+                <td>{{ html_nav_element.itemScope }}</td>
+                <td>{{ html_nav_element.itemType }}</td>
+                <td>{{ html_nav_element.lang }}</td>
+                <td>{{ html_nav_element.style }}</td>
+                <td>{{ html_nav_element.tabIndex }}</td>
+                <td>{{ html_nav_element.title }}</td>
+                <td>{{ html_nav_element.uuid }}</td>
+                <td>
+                    <a href="{{ path('html_nav_element.show', {'id': html_nav_element.id}) }}">show</a>
+                    <a href="{{ path('html_nav_element.edit', {'id': html_nav_element.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="22">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('html_nav_element.new') }}">Create new</a>
+{% endblock %}

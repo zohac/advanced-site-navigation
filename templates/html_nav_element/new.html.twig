@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New HTMLNavElement{% endblock %}
+
+{% block body %}
+    <h1>Create new HTMLNavElement</h1>
+
+    {{ include('html_nav_element/_form.html.twig') }}
+
+    <a href="{{ path('html_nav_element.index') }}">back to list</a>
+{% endblock %}

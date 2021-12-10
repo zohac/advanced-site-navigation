@@ -69,8 +69,8 @@
                 <td>{{ html_image_element.loading }}</td>
                 <td>{{ html_image_element.src }}</td>
                 <td>
-                    <a href="{{ path('html_image_element_show', {'id': html_image_element.id}) }}">show</a>
-                    <a href="{{ path('html_image_element_edit', {'id': html_image_element.id}) }}">edit</a>
+                    <a href="{{ path('html_image_element.show', {'id': html_image_element.id}) }}">show</a>
+                    <a href="{{ path('html_image_element.edit', {'id': html_image_element.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

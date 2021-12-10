@@ -14,23 +14,24 @@ class HTMLImageElementType extends HTMLElementType
         $this->buildHTMLElementForm($builder, $options);
         $builder
             ->add('crossOrigin', ChoiceType::class, [
-                'choices'  => $this->getChoicesValues(HTMLImageElementDto::CROSS_ORIGIN),
+                'choices' => $this->getChoicesValues(HTMLImageElementDto::CROSS_ORIGIN),
                 'placeholder' => 'Choose an option',
                 'required' => false,
             ])
             ->add('decoding', ChoiceType::class, [
-                'choices'  => $this->getChoicesValues(HTMLImageElementDto::DECODING),
+                'choices' => $this->getChoicesValues(HTMLImageElementDto::DECODING),
                 'placeholder' => 'Choose an option',
                 'required' => false,
             ])
             ->add('height')
             ->add('width')
             ->add('loading', ChoiceType::class, [
-                'choices'  => $this->getChoicesValues(HTMLImageElementDto::LOADING),
+                'choices' => $this->getChoicesValues(HTMLImageElementDto::LOADING),
                 'placeholder' => 'Choose an option',
                 'required' => false,
             ])
             ->add('src')
+            ->add('alt')
         ;
     }
 

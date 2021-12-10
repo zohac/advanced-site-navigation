@@ -120,7 +120,7 @@
 
     <a href="{{ path('html_image_element') }}">back to list</a>
 
-    <a href="{{ path('html_image_element_edit', {'id': html_image_element.id}) }}">edit</a>
+    <a href="{{ path('html_image_element.edit', {'id': html_image_element.id}) }}">edit</a>
 
     {{ include('html_image_element/_delete_form.html.twig') }}
 {% endblock %}

@@ -7,15 +7,16 @@ use App\Entity\HTMLImageElement;
 use App\Entity\URI;
 use App\Interfaces\FlowContentInterface;
 
-class HTMLImageElementService extends HTMLElementService implements FlowContentInterface
+class HTMLImageElementService extends HTMLElementService
 {
     public function convertDtoToEntity(HTMLImageElementDto $dto, ?HTMLImageElement $HTMLImageElement = null): HTMLImageElement
     {
         if (null === $HTMLImageElement) {
             $HTMLImageElement = new HTMLImageElement();
+            $HTMLImageElement->setSrc(new URI($dto->src));
+        } elseif ($HTMLImageElement->getSrc()) {
+            $HTMLImageElement->getSrc()->init($dto->src);
         }
-
-        $HTMLImageElement->setSrc(new URI($dto->src));
 
         if (isset($dto->crossOrigin)) {
             $HTMLImageElement->setCrossOrigin($dto->crossOrigin);

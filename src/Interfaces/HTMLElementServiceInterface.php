@@ -2,7 +2,10 @@
 
 namespace App\Interfaces;
 
+use App\Dto\HTMLElementDto;
+use App\Entity\HTMLElement;
+
 interface HTMLElementServiceInterface
 {
-    public function hydrateHTMLElementEntityWithDto($entity, $dto);
+    public function hydrateHTMLElementEntityWithDto(HTMLElement $entity, HTMLElementDto $dto): void;
 }

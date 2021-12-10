@@ -23,7 +23,9 @@
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "5.4.*",
         "symfony/security-csrf": "5.4.*",
+        "symfony/serializer": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
+        "symfony/uid": "5.4.*",
         "symfony/validator": "5.4.*",
         "symfony/yaml": "5.4.*",
         "twig/twig": "^3.0"
@@ -73,6 +75,9 @@
         }
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.3",
+        "phpmd/phpmd": "@stable",
+        "phpstan/phpstan": "^1.2",
         "roave/security-advisories": "dev-latest",
         "symfony/debug-bundle": "5.4.*",
         "symfony/maker-bundle": "^1.36",

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DBAL;
+namespace App\Enum;
 
 use App\Interfaces\EnumInterface;
 

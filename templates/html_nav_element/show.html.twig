@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HTMLNavElement{% endblock %}
+
+{% block body %}
+    <h1>HTMLNavElement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ html_nav_element.id }}</td>
+            </tr>
+            <tr>
+                <th>AccessKey</th>
+                <td>{{ html_nav_element.accessKey }}</td>
+            </tr>
+            <tr>
+                <th>AutoCapitalize</th>
+                <td>{{ html_nav_element.autoCapitalize }}</td>
+            </tr>
+            <tr>
+                <th>Class</th>
+                <td>{{ html_nav_element.class }}</td>
+            </tr>
+            <tr>
+                <th>ContentEditable</th>
+                <td>{{ html_nav_element.contentEditable ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Dir</th>
+                <td>{{ html_nav_element.dir }}</td>
+            </tr>
+            <tr>
+                <th>Draggable</th>
+                <td>{{ html_nav_element.draggable ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Dropzone</th>
+                <td>{{ html_nav_element.dropzone }}</td>
+            </tr>
+            <tr>
+                <th>Hidden</th>
+                <td>{{ html_nav_element.hidden ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{{ html_nav_element.data ? html_nav_element.data|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Uid</th>
+                <td>{{ html_nav_element.uid }}</td>
+            </tr>
+            <tr>
+                <th>ItemId</th>
+                <td>{{ html_nav_element.itemId }}</td>
+            </tr>
+            <tr>
+                <th>ItemProp</th>
+                <td>{{ html_nav_element.itemProp }}</td>
+            </tr>
+            <tr>
+                <th>ItemRef</th>
+                <td>{{ html_nav_element.itemRef }}</td>
+            </tr>
+            <tr>
+                <th>ItemScope</th>
+                <td>{{ html_nav_element.itemScope }}</td>
+            </tr>
+            <tr>
+                <th>ItemType</th>
+                <td>{{ html_nav_element.itemType }}</td>
+            </tr>
+            <tr>
+                <th>Lang</th>
+                <td>{{ html_nav_element.lang }}</td>
+            </tr>
+            <tr>
+                <th>Style</th>
+                <td>{{ html_nav_element.style }}</td>
+            </tr>
+            <tr>
+                <th>TabIndex</th>
+                <td>{{ html_nav_element.tabIndex }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ html_nav_element.title }}</td>
+            </tr>
+            <tr>
+                <th>Uuid</th>
+                <td>{{ html_nav_element.uuid }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('html_nav_element.index') }}">back to list</a>
+
+    <a href="{{ path('html_nav_element.edit', {'id': html_nav_element.id}) }}">edit</a>
+
+    {{ include('html_nav_element/_delete_form.html.twig') }}
+{% endblock %}

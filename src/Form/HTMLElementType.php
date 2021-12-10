@@ -14,20 +14,20 @@ abstract class HTMLElementType extends AbstractType
         $builder
             ->add('accessKey')
             ->add('autoCapitalize', ChoiceType::class, [
-                'choices'  => $this->getChoicesValues(HTMLElementDto::AUTO_CAPITALIZE),
+                'choices' => $this->getChoicesValues(HTMLElementDto::AUTO_CAPITALIZE),
                 'placeholder' => 'Choose an option',
                 'required' => false,
             ])
             ->add('class')
             ->add('contentEditable')
             ->add('dir', ChoiceType::class, [
-                'choices'  => $this->getChoicesValues(HTMLElementDto::DIR),
+                'choices' => $this->getChoicesValues(HTMLElementDto::DIR),
                 'placeholder' => 'Choose an option',
                 'required' => false,
             ])
             ->add('draggable')
             ->add('dropzone', ChoiceType::class, [
-                'choices'  => $this->getChoicesValues(HTMLElementDto::DROPZONE),
+                'choices' => $this->getChoicesValues(HTMLElementDto::DROPZONE),
                 'placeholder' => 'Choose an option',
                 'required' => false,
             ])
@@ -43,15 +43,18 @@ abstract class HTMLElementType extends AbstractType
             ->add('style')
             ->add('tabIndex')
             ->add('title')
-            ->add('alt')
         ;
 
         return $builder;
     }
 
+    /**
+     * @param string[] $array
+     * @return string[]
+     */
     public function getChoicesValues(array $array): array
     {
-        $returnArray= [];
+        $returnArray = [];
 
         foreach ($array as $value) {
             $returnArray[$value] = $value;

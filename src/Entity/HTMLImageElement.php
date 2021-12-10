@@ -2,18 +2,38 @@
 
 namespace App\Entity;
 
-use App\DBAL\CrossOriginEnum;
-use App\DBAL\DecodingEnum;
-use App\DBAL\LoadingEnum;
+use App\Enum\ContentType;
+use App\Enum\CrossOriginEnum;
+use App\Enum\DecodingEnum;
+use App\Enum\LoadingEnum;
+use App\Interfaces\FlowContentInterface;
 use App\Repository\HTMLImageElementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=HTMLImageElementRepository::class)
- * @ORM\Table(name="html_image_element")
+ * @ORM\Table(name="html_image_element",
+ *    uniqueConstraints={
+ *        @ORM\UniqueConstraint(name="id_html_image_element",
+ *            columns={"id_html_image_element", "id_html_element"})
+ *    })
  */
-class HTMLImageElement extends HTMLElement
+class HTMLImageElement extends HTMLElement implements FlowContentInterface
 {
+    private const CONTENT_TYPE = [
+        ContentType::FLOW,
+        ContentType::PHRASING,
+        ContentType::EMBEDDED,
+        ContentType::INTERACTIVE,
+    ];
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id_html_image_element", type="string")
+     */
+    private string $uuid;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -50,6 +70,16 @@ class HTMLImageElement extends HTMLElement
      */
     private URI $src;
 
+    public function __construct()
+    {
+        $this->uuid = Uuid::v4();
+    }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
     public function getAlt(): ?string
     {
         return $this->alt;
@@ -70,7 +100,7 @@ class HTMLImageElement extends HTMLElement
     public function setCrossOrigin(string $crossOrigin): self
     {
         if (!in_array($crossOrigin, CrossOriginEnum::getValues(), true)) {
-            throw new \InvalidArgumentException("Invalid status");
+            throw new \InvalidArgumentException('Invalid status');
         }
         $this->crossOrigin = $crossOrigin;
 
@@ -85,7 +115,7 @@ class HTMLImageElement extends HTMLElement
     public function setDecoding(string $decoding): self
     {
         if (!in_array($decoding, DecodingEnum::getValues(), true)) {
-            throw new \InvalidArgumentException("Invalid status");
+            throw new \InvalidArgumentException('Invalid status');
         }
         $this->decoding = $decoding;
 
@@ -124,7 +154,7 @@ class HTMLImageElement extends HTMLElement
     public function setLoading(string $loading): self
     {
         if (!in_array($loading, LoadingEnum::getValues(), true)) {
-            throw new \InvalidArgumentException("Invalid status");
+            throw new \InvalidArgumentException('Invalid status');
         }
         $this->loading = $loading;
 
@@ -141,5 +171,13 @@ class HTMLImageElement extends HTMLElement
         $this->src = $src;
 
         return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getContentType(): array
+    {
+        return self::CONTENT_TYPE;
     }
 }

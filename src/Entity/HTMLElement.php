@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use App\DBAL\AutoCapitalizeEnum;
-use App\DBAL\DirEnum;
-use App\DBAL\DropzoneEnum;
+use App\Enum\AutoCapitalizeEnum;
+use App\Enum\DirEnum;
+use App\Enum\DropzoneEnum;
 use App\Repository\HTMLElementRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=HTMLElementRepository::class)
- * @ORM\Table(name="html_element")
+ * @ORM\Table(name="html_element",
+ *    uniqueConstraints={
+ *        @ORM\UniqueConstraint(name="id_html_element",
+ *            columns={"id_html_element"})
+ *    })
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
@@ -18,10 +22,9 @@ abstract class HTMLElement
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
      * @ORM\Column(name="id_html_element", type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -118,9 +121,6 @@ abstract class HTMLElement
      */
     private ?string $title;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
@@ -146,7 +146,7 @@ abstract class HTMLElement
     public function setAutoCapitalize(string $autoCapitalize): self
     {
         if (!in_array($autoCapitalize, AutoCapitalizeEnum::getValues(), true)) {
-            throw new \InvalidArgumentException("Invalid status");
+            throw new \InvalidArgumentException('Invalid status');
         }
         $this->autoCapitalize = $autoCapitalize;
 
@@ -185,7 +185,7 @@ abstract class HTMLElement
     public function setDir(string $dir): self
     {
         if (!in_array($dir, DirEnum::getValues(), true)) {
-            throw new \InvalidArgumentException("Invalid status");
+            throw new \InvalidArgumentException('Invalid status');
         }
         $this->dir = $dir;
 
@@ -212,7 +212,7 @@ abstract class HTMLElement
     public function setDropzone(string $dropzone): self
     {
         if (!in_array($dropzone, DropzoneEnum::getValues(), true)) {
-            throw new \InvalidArgumentException("Invalid status");
+            throw new \InvalidArgumentException('Invalid status');
         }
         $this->dropzone = $dropzone;
 

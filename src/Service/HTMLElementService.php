@@ -4,36 +4,30 @@ namespace App\Service;
 
 use App\Dto\HTMLElementDto;
 use App\Entity\HTMLElement;
-use App\Interfaces\HTMLElementServiceInterface;
 
 class HTMLElementService
 {
-    protected function hydrateHTMLElementEntityWithDto($entity, $dto): void
+    protected function hydrateHTMLElementEntityWithDto(HTMLElement $entity, HTMLElementDto $dto): void
     {
-        if ($entity instanceof HTMLElement) {
-            $properties = get_class_vars(HTMLElementDto::class);
+        $properties = get_class_vars(HTMLElementDto::class);
 
-            foreach ($properties as $property => $value) {
-                if (isset($dto->$property)) {
-                    dump($dto->$property);
-                    $method = 'set' . ucfirst($property);
-                    if (method_exists(HTMLElement::class, $method)) {
-                        $entity->$method($dto->$property);
-                    }
+        foreach ($properties as $property => $value) {
+            if (isset($dto->$property)) {
+                $method = 'set'.ucfirst($property);
+                if (method_exists(HTMLElement::class, $method)) {
+                    $entity->$method($dto->$property);
                 }
             }
         }
     }
 
-    protected function hydrateDtoWithHTMLElementEntity($dto, $entity): void
+    protected function hydrateDtoWithHTMLElementEntity(HTMLElementDto $dto, HTMLElement $entity): void
     {
-        if ($dto instanceof HTMLElementDto) {
-            $properties = get_class_vars(HTMLElementDto::class);
+        $properties = get_class_vars(HTMLElementDto::class);
 
-            foreach ($properties as $property => $value) {
-                $method = 'get' . ucfirst($property);
-                $dto->$property = $entity->$method();
-            }
+        foreach ($properties as $property => $value) {
+            $method = 'get'.ucfirst($property);
+            $dto->$property = $entity->$method();
         }
     }
 }

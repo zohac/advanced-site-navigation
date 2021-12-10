@@ -2,9 +2,9 @@
 
 namespace App\Dto;
 
-use App\DBAL\AutoCapitalizeEnum;
-use App\DBAL\DirEnum;
-use App\DBAL\DropzoneEnum;
+use App\Enum\AutoCapitalizeEnum;
+use App\Enum\DirEnum;
+use App\Enum\DropzoneEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class HTMLElementDto
@@ -49,6 +49,9 @@ class HTMLElementDto
 
     public ?bool $hidden;
 
+    /**
+     * @var string[]|null
+     */
     public ?array $data;
 
     public ?string $uid;
