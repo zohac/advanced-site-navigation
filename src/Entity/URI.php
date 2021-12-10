@@ -49,6 +49,8 @@ class URI
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string[]|null
      */
     private ?array $query;
 
@@ -232,6 +234,7 @@ class URI
 
     /**
      * @param string[] $query
+     *
      * @return $this
      */
     public function setQuery(array $query = []): self

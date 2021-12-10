@@ -10,19 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=HTMLElementRepository::class)
- * @ORM\Table(name="html_element",
- *    uniqueConstraints={
- *        @ORM\UniqueConstraint(name="id_html_element",
- *            columns={"id_html_element"})
- *    })
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\Table(name="html_element")
  */
 abstract class HTMLElement
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id_html_element", type="integer")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private int $id;
 

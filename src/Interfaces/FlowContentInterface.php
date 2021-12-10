@@ -4,6 +4,8 @@ namespace App\Interfaces;
 
 interface FlowContentInterface
 {
+    public function getId(): ?int;
+
     /**
      * @return string[]
      */

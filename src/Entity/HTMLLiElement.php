@@ -4,26 +4,15 @@ namespace App\Entity;
 
 use App\Repository\HTMLLiElementRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=HTMLLiElementRepository::class)
- * @ORM\Table(name="html_li_element",
- *    uniqueConstraints={
- *        @ORM\UniqueConstraint(name="id_html_li_element",
- *            columns={"id_html_li_element", "id_html_element"})
- *    })
+ * @ORM\Table(name="html_li_element")
  */
 class HTMLLiElement extends HTMLElement
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(name="id_html_li_element", type="string")
-     */
-    private string $uuid;
-
-    /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable="true")
      */
     private int $value;
 
@@ -33,26 +22,13 @@ class HTMLLiElement extends HTMLElement
     private ?FlowContent $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=HTMLOListElement::class, inversedBy="HTMLLiElement")
-     * @ORM\JoinColumns(
-     *      @ORM\JoinColumn(name="uuid", referencedColumnName="id_html_olist_element"),
-     *      @ORM\JoinColumn(name="id", referencedColumnName="id_html_element"),
+     * @ORM\ManyToOne(
+     *     targetEntity=HTMLOListElement::class,
+     *     inversedBy="HTMLLiElement",
+     *     cascade={"persist", "remove"}
      * )
      */
     private $parent;
-
-    public function __construct()
-    {
-        $this->uuid = Uuid::v4();
-    }
-
-    /**
-     * @return string
-     */
-    public function getUuid(): string
-    {
-        return $this->uuid;
-    }
 
     public function getValue(): ?int
     {

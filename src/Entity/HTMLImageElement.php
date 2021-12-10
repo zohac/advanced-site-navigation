@@ -9,15 +9,10 @@ use App\Enum\LoadingEnum;
 use App\Interfaces\FlowContentInterface;
 use App\Repository\HTMLImageElementRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=HTMLImageElementRepository::class)
- * @ORM\Table(name="html_image_element",
- *    uniqueConstraints={
- *        @ORM\UniqueConstraint(name="id_html_image_element",
- *            columns={"id_html_image_element", "id_html_element"})
- *    })
+ * @ORM\Table(name="html_image_element")
  */
 class HTMLImageElement extends HTMLElement implements FlowContentInterface
 {
@@ -27,12 +22,6 @@ class HTMLImageElement extends HTMLElement implements FlowContentInterface
         ContentType::EMBEDDED,
         ContentType::INTERACTIVE,
     ];
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="id_html_image_element", type="string")
-     */
-    private string $uuid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -69,16 +58,6 @@ class HTMLImageElement extends HTMLElement implements FlowContentInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private URI $src;
-
-    public function __construct()
-    {
-        $this->uuid = Uuid::v4();
-    }
-
-    public function getUuid(): string
-    {
-        return $this->uuid;
-    }
 
     public function getAlt(): ?string
     {

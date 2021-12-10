@@ -10,28 +10,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * @UniqueEntity("uuid")
  * @ORM\Entity(repositoryClass=HTMLOListElementRepository::class)
- * @ORM\Table(name="html_olist_element",
- *    uniqueConstraints={
- *        @ORM\UniqueConstraint(name="uuid",
- *            columns={"id_html_olist_element", "id_html_element"})
- *    })
+ * @ORM\Table(name="html_olist_element")
  */
 class HTMLOListElement extends HTMLElement implements FlowContentInterface
 {
     private const CONTENT_TYPE = [
         ContentType::FLOW,
     ];
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="id_html_olist_element", type="string")
-     */
-    private string $uuid;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -49,19 +38,19 @@ class HTMLOListElement extends HTMLElement implements FlowContentInterface
     private string $type = OListEnum::TYPE_NUMERAL;
 
     /**
-     * @ORM\OneToMany(targetEntity=HTMLLiElement::class, mappedBy="parent")
+     * @ORM\OneToMany(
+     *     targetEntity=HTMLLiElement::class,
+     *     mappedBy="parent",
+     *     cascade={"persist", "remove"}
+     * )
+     *
+     * @var Collection|HTMLLiElement[]
      */
-    private $HTMLLiElement;
+    private Collection $HTMLLiElement;
 
     public function __construct()
     {
         $this->HTMLLiElement = new ArrayCollection();
-        $this->uuid = Uuid::v4();
-    }
-
-    public function getUuid(): string
-    {
-        return $this->uuid;
     }
 
     public function getReversed(): ?bool

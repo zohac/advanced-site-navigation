@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\HTMLLiElement;
 use App\Entity\HTMLOListElement;
 use Doctrine\ORM\EntityManagerInterface;
 

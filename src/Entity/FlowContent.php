@@ -23,25 +23,40 @@ class FlowContent
      *
      * @var FlowContentInterface[]
      */
-    private array $content = [];
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    private array $contents = [];
 
     /**
      * @return FlowContentInterface[]
      */
-    public function getContent(): array
+    public function getContents(): array
     {
-        return $this->content;
+        return $this->contents;
     }
 
     public function addContent(FlowContentInterface $content): self
     {
-        $this->content[] = $content;
+        if (!$this->contains($content)) {
+            $this->contents[] = $content;
+        }
 
         return $this;
+    }
+
+    public function removeContent(FlowContentInterface $content): self
+    {
+        $this->removeElement($content);
+
+        return $this;
+    }
+
+    private function contains(FlowContentInterface $content): bool
+    {
+        return in_array($content, $this->contents, true);
+    }
+
+    private function removeElement(FlowContentInterface $content): void
+    {
+        $key = array_search($content, $this->contents, true);
+        unset($this->contents[$key]);
     }
 }
